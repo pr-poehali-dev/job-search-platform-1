@@ -133,8 +133,8 @@ const Index = () => {
               <h1 className="text-2xl font-bold text-gray-900">Job Search</h1>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="outline">Войти</Button>
-              <Button>Регистрация</Button>
+              <Button variant="outline" onClick={() => navigate("/login")}>Войти</Button>
+              <Button onClick={() => navigate("/register")}>Регистрация</Button>
             </div>
           </div>
         </div>
@@ -199,35 +199,100 @@ const Index = () => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="vacancies" className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-semibold text-gray-900">
-                Популярные вакансии
-              </h3>
-              <div className="flex items-center gap-4">
-                <Select>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="Зарплата" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="50k-100k">50-100K</SelectItem>
-                    <SelectItem value="100k-200k">100-200K</SelectItem>
-                    <SelectItem value="200k+">200K+</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select>
-                  <SelectTrigger className="w-40">
-                    <SelectValue placeholder="Опыт" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="no-experience">Без опыта</SelectItem>
-                    <SelectItem value="1-3">1-3 года</SelectItem>
-                    <SelectItem value="3-6">3-6 лет</SelectItem>
-                    <SelectItem value="6+">6+ лет</SelectItem>
-                  </SelectContent>
-                </Select>
+          <TabsContent value="vacancies" className="space-y-8">
+            {/* Popular Jobs Section */}
+            <section className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    🔥 Популярные вакансии
+                  </h3>
+                  <p className="text-gray-600">
+                    Самые востребованные позиции этой недели
+                  </p>
+                </div>
+                <Button variant="outline" size="sm">
+                  <Icon name="TrendingUp" size={16} className="mr-2" />
+                  Все популярные
+                </Button>
               </div>
-            </div>
+              
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {vacancies.slice(0, 6).map((vacancy) => (
+                  <Card
+                    key={vacancy.id}
+                    className="hover:shadow-lg transition-all duration-300 cursor-pointer border-0 bg-white/80 backdrop-blur-sm"
+                    onClick={() => navigate(`/job/${vacancy.id}`)}
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <CardTitle className="text-lg line-clamp-1">
+                            {vacancy.title}
+                          </CardTitle>
+                          <CardDescription className="text-sm font-medium text-gray-600 mt-1">
+                            {vacancy.company}
+                          </CardDescription>
+                        </div>
+                        <Badge variant="secondary" className="ml-2">
+                          {vacancy.type}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-0">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4 text-sm text-gray-500">
+                          <span className="flex items-center gap-1">
+                            <Icon name="MapPin" size={14} />
+                            {vacancy.location}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Icon name="Clock" size={14} />
+                            {vacancy.postedAt}
+                          </span>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm font-semibold text-green-600">
+                            {vacancy.salary}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </section>
+
+            {/* All Jobs Section */}
+            <section>
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-gray-900">
+                  Все вакансии
+                </h3>
+                <div className="flex items-center gap-4">
+                  <Select>
+                    <SelectTrigger className="w-40">
+                      <SelectValue placeholder="Зарплата" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="50k-100k">50-100K</SelectItem>
+                      <SelectItem value="100k-200k">100-200K</SelectItem>
+                      <SelectItem value="200k+">200K+</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select>
+                    <SelectTrigger className="w-40">
+                      <SelectValue placeholder="Опыт" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="no-experience">Без опыта</SelectItem>
+                      <SelectItem value="1-3">1-3 года</SelectItem>
+                      <SelectItem value="3-6">3-6 лет</SelectItem>
+                      <SelectItem value="6+">6+ лет</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
 
             <div className="grid gap-4">
               {vacancies.map((vacancy) => (
