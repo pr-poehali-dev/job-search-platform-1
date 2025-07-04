@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -21,6 +22,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Icon from "@/components/ui/icon";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("vacancies");
   const [selectedCity, setSelectedCity] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -232,6 +234,7 @@ const Index = () => {
                 <Card
                   key={vacancy.id}
                   className="hover:shadow-lg transition-shadow cursor-pointer"
+                  onClick={() => navigate(`/job/${vacancy.id}`)}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
